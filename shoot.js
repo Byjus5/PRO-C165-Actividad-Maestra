@@ -25,27 +25,27 @@ AFRAME.registerComponent("bullets", {
 
         var camera = document.querySelector("#camera").object3D;
 
-        //get the camera direction as Three.js Vector
+        //obtén la dirección de la cámara como vector Three.js 
         var direction = new THREE.Vector3();
         camera.getWorldDirection(direction);
 
-        //set the velocity and it's direction
+        //establece la velocidad y su dirección
         bullet.setAttribute("velocity", direction.multiplyScalar(-50));
 
         var scene = document.querySelector("#scene");
 
-        //set the bullet as the dynamic entity
+        //establece a la bala como entidad dinámica
         bullet.setAttribute("dynamic-body", {
           shape: "sphere",
           mass: "50",
         });
 
-        //add the collide event listener to the bullet
+        //agrega el evento de colisión de escucha a la bala
         bullet.addEventListener("collide", this.removeBullet);
 
         scene.appendChild(bullet);
 
-        //shooting sound
+        //sonido de disparo
         this.shootSound();
       }
     });
@@ -53,22 +53,22 @@ AFRAME.registerComponent("bullets", {
   removeBullet: function (e) {
     var scene = document.querySelector("#scene");
     
-    //bullet element
+    //elemento de bala
     var element = e.detail.target.el;
 
-    //element which is hit
+    //elemento que es golpeado
     var elementHit = e.detail.body.el;
 
     if (elementHit.id.includes("enemy")) {
-      //Add code here
+      //agregar código aquí
 
       
       scene.removeChild(elementHit);
     }
-    //remove event listener
+    //eliminar evento de escucha
     element.removeEventListener("collide", this.removeBullet);
 
-    //remove the bullets from the scene   
+    //eliminar las balas de la escena   
     scene.removeChild(element);
   },
   shootSound: function () {
